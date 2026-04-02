@@ -1,0 +1,48 @@
+digraph "\<sample.locationtest.LocationTest: void setMessage(java.lang.String)\>" {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fillcolor="#e8f4fd", fontname="Courier New", fontsize=10];
+  edge [color="#4a90d9"];
+
+  n0 [label="r0 := @this: sample.locationtest.LocationTest"];
+  n1 [label="$r1 := @parameter0: java.lang.String"];
+  n2 [label="r2 = new java.text.SimpleDateFormat"];
+  n3 [label="specialinvoke r2.\<java.text.SimpleDateFormat: void \<init\>(java.lang.String)\>(\"yyyy/MM/dd HH:mm:ss\")"];
+  n4 [label="$r3 = new java.util.Date"];
+  n5 [label="specialinvoke $r3.\<java.util.Date: void \<init\>()\>()"];
+  n6 [label="$r4 = virtualinvoke r2.\<java.text.SimpleDateFormat: java.lang.String format(java.util.Date)\>($r3)"];
+  n7 [label="$r5 = virtualinvoke r0.\<sample.locationtest.LocationTest: android.view.View findViewById(int)\>(2131034113)"];
+  n8 [label="r6 = (android.widget.TextView) $r5"];
+  n9 [label="$r7 = new java.lang.StringBuilder"];
+  n10 [label="specialinvoke $r7.\<java.lang.StringBuilder: void \<init\>()\>()"];
+  n11 [label="$r8 = virtualinvoke r6.\<android.widget.TextView: java.lang.CharSequence getText()\>()"];
+  n12 [label="$r7 = virtualinvoke $r7.\<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)\>($r8)"];
+  n13 [label="$r9 = staticinvoke \<java.lang.System: java.lang.String getProperty(java.lang.String)\>(\"line.separator\")"];
+  n14 [label="$r7 = virtualinvoke $r7.\<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)\>($r9)"];
+  n15 [label="$r7 = virtualinvoke $r7.\<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)\>($r4)"];
+  n16 [label="$r7 = virtualinvoke $r7.\<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)\>(\":\")"];
+  n17 [label="$r7 = virtualinvoke $r7.\<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)\>($r1)"];
+  n18 [label="$r1 = virtualinvoke $r7.\<java.lang.StringBuilder: java.lang.String toString()\>()"];
+  n19 [label="virtualinvoke r6.\<android.widget.TextView: void setText(java.lang.CharSequence)\>($r1)"];
+  n20 [label="return"];
+
+  n0 -> n1;
+  n1 -> n2;
+  n2 -> n3;
+  n3 -> n4;
+  n4 -> n5;
+  n5 -> n6;
+  n6 -> n7;
+  n7 -> n8;
+  n8 -> n9;
+  n9 -> n10;
+  n10 -> n11;
+  n11 -> n12;
+  n12 -> n13;
+  n13 -> n14;
+  n14 -> n15;
+  n15 -> n16;
+  n16 -> n17;
+  n17 -> n18;
+  n18 -> n19;
+  n19 -> n20;
+}

@@ -1,0 +1,14 @@
+digraph "\<sample.locationtest.LocationTest: void onProviderDisabled(java.lang.String)\>" {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fillcolor="#e8f4fd", fontname="Courier New", fontsize=10];
+  edge [color="#4a90d9"];
+
+  n0 [label="r0 := @this: sample.locationtest.LocationTest"];
+  n1 [label="$r1 := @parameter0: java.lang.String"];
+  n2 [label="specialinvoke r0.\<sample.locationtest.LocationTest: void setMessage(java.lang.String)\>(\"onProviderDisabled\")"];
+  n3 [label="return"];
+
+  n0 -> n1;
+  n1 -> n2;
+  n2 -> n3;
+}

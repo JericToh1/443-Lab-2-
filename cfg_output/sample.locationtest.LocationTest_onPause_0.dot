@@ -1,0 +1,20 @@
+digraph "\<sample.locationtest.LocationTest: void onPause()\>" {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fillcolor="#e8f4fd", fontname="Courier New", fontsize=10];
+  edge [color="#4a90d9"];
+
+  n0 [label="r0 := @this: sample.locationtest.LocationTest"];
+  n1 [label="specialinvoke r0.\<android.app.Activity: void onPause()\>()"];
+  n2 [label="$r1 = r0.\<sample.locationtest.LocationTest: android.location.LocationManager lm\>"];
+  n3 [label="virtualinvoke $r1.\<android.location.LocationManager: void removeUpdates(android.location.LocationListener)\>(r0)"];
+  n4 [label="r0.\<sample.locationtest.LocationTest: android.location.LocationManager lm\> = null"];
+  n5 [label="staticinvoke \<android.util.Log: int d(java.lang.String,java.lang.String)\>(\"LocationTest\", \"removeUpdates\")"];
+  n6 [label="return"];
+
+  n0 -> n1;
+  n1 -> n2;
+  n2 -> n3;
+  n3 -> n4;
+  n4 -> n5;
+  n5 -> n6;
+}

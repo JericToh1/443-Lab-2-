@@ -24,7 +24,7 @@ Lab 2/
 ├── demo.apk                 ← Your APK (the subject of analysis)
 ├── sensitive_apis.csv        ← 32,438 rows of sensitive API definitions
 ├── run_analysis.sh           ← One-click build & run script
-├── convert_cfg.sh            ← DOT → PNG/PDF converter
+├── convert_cfg.py            ← DOT → PNG converter
 ├── soot-analysis/            ← Maven project
 │   ├── pom.xml               ← Dependencies (Soot 4.5.0, OpenCSV, SLF4J)
 │   └── src/main/java/cs443/lab2/
@@ -93,8 +93,8 @@ java -jar soot-analysis/target/soot-analysis-1.0-SNAPSHOT.jar \
     --sensitive-output sensitive_apis.txt
 
 # 3. Convert CFGs to PNG/PDF
-./convert_cfg.sh                    # Convert ALL
-./convert_cfg.sh cfg_output/some_file.dot  # Convert ONE
+./convert_cfg.py                    # Convert ALL
+./convert_cfg.py cfg_output/some_file.dot  # Convert ONE
 ```
 
 ### CLI Flags
@@ -114,8 +114,8 @@ java -jar soot-analysis/target/soot-analysis-1.0-SNAPSHOT.jar \
 | File | Description |
 |---|---|
 | `cfg_output/*.dot` | Control Flow Graph for each method (15 files) |
-| `cfg_png/*.png` | Rendered CFG images (after running `convert_cfg.sh`) |
-| `cfg_png/*.pdf` | Rendered CFG PDFs (after running `convert_cfg.sh`) |
+| `cfg_png/*.png` | Rendered CFG images (after running `convert_cfg.py`) |
+| `cfg_png/*.pdf` | Rendered CFG PDFs (after running `convert_cfg.py`) |
 | `sensitive_apis.txt` | `API_name : frequency : [residing functions]` format |
 
 ---
@@ -137,4 +137,4 @@ The `Main.java` (`soot-analysis/src/main/java/cs443/lab2/Main.java`) is organize
 - [x] Soot loads `demo.apk` and resolves 7 application classes
 - [x] 15 CFG `.dot` files generated in `cfg_output/`
 - [x] 10 sensitive API calls detected and exported to `sensitive_apis.txt`
-- [x] CFG converted to PNG + PDF via Graphviz
+- [x] CFG converted to PNG via Graphviz

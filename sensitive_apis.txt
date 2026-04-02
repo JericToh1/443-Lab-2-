@@ -1,7 +1,7 @@
 # CS443 Lab 2 — Sensitive API Usage Report
 # Format: API_name : frequency : residing_functions
-# Generated: Thu Apr 02 22:55:14 SGT 2026
-# APK: demo.apk
+# Generated: Thu Apr 02 23:31:24 SGT 2026
+# APK: /Users/jerictoh/Desktop/Year 2 Semester 2/CS443 Software and Systems Security/Lab 2/demo.apk
 #
 android.location.LocationManager.isProviderEnabled : 3 : [sample.locationtest.LocationTest.onResume]
 android.app.Activity.<init> : 1 : [sample.locationtest.LocationTest.<init>]

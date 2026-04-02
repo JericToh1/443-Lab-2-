@@ -32,6 +32,7 @@ public class Main {
     private static String androidPlatformsPath;
     private static String sensitiveApisCsvPath;
     private static String cfgOutputDir;
+    private static String pngOutputDir;
     private static String sensitiveOutputFile;
 
     // ── Data structures ───────────────────────────────────────────────
@@ -55,6 +56,7 @@ public class Main {
         System.out.println("[*] Android Platforms    : " + androidPlatformsPath);
         System.out.println("[*] Sensitive APIs CSV   : " + sensitiveApisCsvPath);
         System.out.println("[*] CFG Output Directory : " + cfgOutputDir);
+        System.out.println("[*] PNG Output Directory : " + pngOutputDir);
         System.out.println("[*] Sensitive API Output : " + sensitiveOutputFile);
         System.out.println();
 
@@ -85,6 +87,7 @@ public class Main {
                 : System.getProperty("user.home") + "/Library/Android/sdk/platforms";
         sensitiveApisCsvPath = projectRoot + "/../sensitive_apis.csv";
         cfgOutputDir = projectRoot + "/../cfg_output";
+        pngOutputDir = projectRoot + "/../cfg_png";
         sensitiveOutputFile = projectRoot + "/../sensitive_apis.txt";
 
         // Override via CLI flags
@@ -101,6 +104,9 @@ public class Main {
                     break;
                 case "--cfg-output":
                     cfgOutputDir = args[++i];
+                    break;
+                case "--png-output":
+                    pngOutputDir = args[++i];
                     break;
                 case "--sensitive-output":
                     sensitiveOutputFile = args[++i];
@@ -143,6 +149,7 @@ public class Main {
         System.out.println("  --android-platforms <path>  Path to Android SDK platforms/");
         System.out.println("  --sensitive-apis <path>     Path to sensitive_apis.csv");
         System.out.println("  --cfg-output <dir>          Output directory for .dot files");
+        System.out.println("  --png-output <dir>          Output directory for .png files");
         System.out.println("  --sensitive-output <path>   Output file for sensitive API report");
         System.out.println("  --help                      Show this help");
     }
@@ -224,6 +231,8 @@ public class Main {
         // Create output directory for CFGs
         Path cfgDir = Paths.get(cfgOutputDir);
         Files.createDirectories(cfgDir);
+        Path pngDir = Paths.get(pngOutputDir);
+        Files.createDirectories(pngDir);
 
         int classCount = 0;
         int methodCount = 0;
@@ -256,10 +265,15 @@ public class Main {
 
                     // ── Generate CFG ──────────────────────────────
                     UnitGraph cfg = new BriefUnitGraph(body);
-                    String dotFileName = sanitizeFileName(className + "_" + method.getName()
-                            + "_" + method.getParameterCount()) + ".dot";
-                    Path dotFilePath = cfgDir.resolve(dotFileName);
+                    String fileBase = sanitizeFileName(className + "_" + method.getName()
+                            + "_" + method.getParameterCount());
+                    
+                    Path dotFilePath = cfgDir.resolve(fileBase + ".dot");
                     exportCfgAsDot(cfg, method, dotFilePath);
+                    
+                    Path pngFilePath = pngDir.resolve(fileBase + ".png");
+                    convertDotToPng(dotFilePath, pngFilePath);
+                    
                     cfgCount++;
 
                     // ── Scan for sensitive API calls ──────────────
@@ -424,5 +438,21 @@ public class Main {
     /** Sanitize file names (replace problematic characters) */
     private static String sanitizeFileName(String name) {
         return name.replaceAll("[^a-zA-Z0-9._\\-]", "_");
+    }
+
+    /** Convert .dot file to .png using System ProcessBuilder and Graphviz 'dot' command */
+    private static void convertDotToPng(Path dotFile, Path pngOut) {
+        try {
+            ProcessBuilder pb = new ProcessBuilder("dot", "-Tpng", dotFile.toString(), "-o", pngOut.toString());
+            Process process = pb.start();
+            process.waitFor();
+            if (process.exitValue() != 0) {
+                System.err.println("      [WARN] Graphviz dot command failed for " + dotFile.getFileName());
+            }
+        } catch (IOException e) {
+            System.err.println("      [WARN] Could not run Graphviz 'dot' command. Is it installed? " + e.getMessage());
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }

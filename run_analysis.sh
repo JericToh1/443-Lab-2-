@@ -64,14 +64,13 @@ java -jar "$PROJECT_DIR/$JAR_FILE" \
     --android-platforms "$ANDROID_PLATFORMS" \
     --sensitive-apis "$SCRIPT_DIR/sensitive_apis.csv" \
     --cfg-output "$SCRIPT_DIR/cfg_output" \
+    --png-output "$SCRIPT_DIR/cfg_png" \
     --sensitive-output "$SCRIPT_DIR/sensitive_apis.txt"
 
 echo ""
 echo "═══════════════════════════════════════════════════════"
 echo "  Done! Check:"
 echo "    • cfg_output/        — CFG .dot files"
+echo "    • cfg_png/           — Rendered CFG images"
 echo "    • sensitive_apis.txt — Sensitive API report"
-echo ""
-echo "  To visualize CFGs as PNG:"
-echo "    ./convert_cfg.sh"
 echo "═══════════════════════════════════════════════════════"

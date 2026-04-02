@@ -231,7 +231,6 @@ public class Main {
 
         // Iterate through all application classes
         for (SootClass sootClass : Scene.v().getApplicationClasses()) {
-            classCount++;
             String className = sootClass.getName();
 
             // Skip Android framework / support library classes
@@ -240,6 +239,8 @@ public class Main {
                     || className.startsWith("kotlin.") || className.startsWith("kotlinx.")) {
                 continue;
             }
+
+            classCount++;
 
             System.out.println("    → Analyzing class: " + className);
 
